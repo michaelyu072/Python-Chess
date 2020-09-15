@@ -4,7 +4,7 @@ import time
 import math
 
 pygame.init()
-
+global over 
 	
 beige = (243,194,145)
 brown = (155,83,6)
@@ -63,7 +63,7 @@ def move(square, endSquare):
 
 
 
-def draw():
+def draw(over):
 
 	for row in board:
 		for col in row:
@@ -157,6 +157,8 @@ def isValid(square, endSquare, whiteTurn, board):
 
 				 if endSquare is board[7][6] or endSquare is board[0][6]:
 				 	return 3
+				 elif endSquare is board[7][2] or endSquare is board[0][2]:
+				 	return 4
 				 else:
 				 	return 1
 
@@ -170,6 +172,20 @@ def isValid(square, endSquare, whiteTurn, board):
 
 
 
+def checkmate(king, board, checking):
+	if not king.inCheck:
+		return False
+	else:
+		for i in king.reachable:
+			if i.piece is None or i.piece.color != king.color:
+				return False
+		for i in board:
+			for j in i:
+				if j.piece is not None:
+					if j.piece.color == king.color:
+						if checking in j.piece.reachable:
+							return False
+	return True
 
 
 
@@ -193,6 +209,7 @@ def main():
 	promoted = False
 	whiteKing = board[7][4].piece
 	blackKing = board[0][4].piece
+	checking = None
 	while run:
 
 		for i in board:
@@ -206,9 +223,11 @@ def main():
 					for k in j.piece.reachable:
 						if k.piece is whiteKing and j.piece.color == black:
 							whiteKing.inCheck = True
+							checking = j
 							k.setColor(red)
 						elif k.piece is blackKing and j.piece.color == white:
 							blackKing.inCheck = True
+							checking = j
 							k.setColor(red)
 						
 
@@ -216,7 +235,7 @@ def main():
 
 
 		win.fill((0,0,0,0))
-		draw()
+		draw(over)
 
 		for event in pygame.event.get():
 
@@ -279,7 +298,11 @@ def main():
 						square.setColor(yellow)
 						if square.piece is not None:
 							for i in square.piece.reachable:
-								i.setColor(red)
+								if i.piece is None:
+									i.setColor(red)
+								else:
+									if i.piece.color != square.piece.color:
+										i.setColor(red)
 						selected = True
 				else:
 					endSquare = board[row][col]
@@ -339,7 +362,22 @@ def main():
 								for j in i:
 									j.reset()
 						selected = False
-
+					elif isValid(square, endSquare, whiteTurn, board) == 4:
+						taken = endSquare.piece
+						move(square, endSquare)
+						if endSquare.piece.color == white:
+							board[7][3].setPiece(pieces.rook(white))
+							board[7][0].piece = None
+							endSquare.piece.moved = True
+						else:
+							board[0][3].setPiece(pieces.rook(black))
+							board[0][0].piece = None
+							endSquare.piece.moved = True
+						whiteTurn = not whiteTurn
+						for i in board:
+								for j in i:
+									j.reset()
+						selected = False
 
 
 
@@ -368,7 +406,11 @@ def main():
 							endSquare.setColor(yellow)
 							square = board[row][col]
 							for i in square.piece.reachable:
-								i.setColor(red)
+								if i.piece is None:
+									i.setColor(red)
+								else:
+									if i.piece.color != square.piece.color:
+										i.setColor(red)
 							
 
 						else:
@@ -379,15 +421,18 @@ def main():
 							selected = False
 
 
-		
+		if checkmate(blackKing, board, checking):
+			over = True
+
+		if checkmate(whiteKing, board, checking):
+			over = True
+
 
 
 				
 				
 
-			
 
-			
 
 
 				
