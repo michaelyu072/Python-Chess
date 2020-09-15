@@ -145,10 +145,18 @@ def kingMoves(square, board):
 	if not square.piece.moved:
 		if square.piece.color == white:
 			moves.append(board[7][6])
-			moves.append(board[7][3])
+			moves.append(board[7][2])
+
 		if square.piece.color == black:
 			moves.append(board[0][6])
-			moves.append(board[0][3])
+			moves.append(board[0][2])
+
+	for i in board:
+		for j in i:
+			if j.piece is not None:
+				for k in j.piece.reachable:
+					if j.piece.color != square.piece.color and k in moves:
+						moves.remove(k)
 
 	return moves
 
@@ -296,7 +304,7 @@ def reachable(square, board):
 	k = 0
 	while k<len(reachable):
 		if reachable[k].piece is not None:
-			if reachable[k].piece.color == square.piece.color:
+			if reachable[k].piece is square.piece:
 				removed.append(reachable[k])
 		k+=1
 	for i in removed:
