@@ -9,7 +9,7 @@ moves that this program does not support: En passant and pawn promotion to a pie
   4. A pawn can only move diagnally when there is a piece of the opposite color to be taken.
   5. Pawn promotes to a queen when it reaches the end of the board.
   6. The King's square is highlighted red when the King is in check.
-  7. Whether or not the king has moved before castle.
+  7. The King cannot castle after moving.
 # Rules that this program does not check for:
   1. Whether or not a piece can prevent checkmate by blocking an opposing piece's attack on the king.
   3. Whether or not the squares between a king and a rook are attacked before castle.
