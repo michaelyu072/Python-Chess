@@ -63,8 +63,10 @@ def move(square, endSquare):
 
 
 
-def draw(over):
+def draw(over, piece):
 
+	fnt = pygame.font.SysFont("TimesNewRoman", 60)
+	
 	for row in board:
 		for col in row:
 			pygame.draw.rect(win, col.color, (col.x, col.y, col.width, col.width))
@@ -74,6 +76,15 @@ def draw(over):
 		for col in row:
 			if col.piece is not None:
 				win.blit(col.piece.image, (col.piecex, col.piecey))
+	if over:
+		if piece.color == white:
+			text = fnt.render("CHECKMATE: BLACK WINS", 4, (0, 0, 0))
+			win.blit(text, (w/6, w/2))
+			
+		elif piece.color == black:
+			text = fnt.render("CHECKMATE: WHITE WINS", 4, (255, 255, 255))
+			win.blit(text, (w/6 , w/2))
+
 	pygame.display.update()
 
 
@@ -160,6 +171,7 @@ def isValid(square, endSquare, whiteTurn, board):
 				 elif endSquare is board[7][2] or endSquare is board[0][2]:
 				 	return 4
 				 else:
+				 	square.piece.moved = True
 				 	return 1
 
 				
@@ -173,6 +185,7 @@ def isValid(square, endSquare, whiteTurn, board):
 
 
 def checkmate(king, board, checking):
+
 	if not king.inCheck:
 		return False
 	else:
@@ -210,32 +223,28 @@ def main():
 	whiteKing = board[7][4].piece
 	blackKing = board[0][4].piece
 	checking = None
+	king = None
 	while run:
 
+
+		
 		for i in board:
 			for j in i:
 				if j.piece is not None:
 
 					if j.piece is blackKing or j.piece is whiteKing:
-						j.piece.inCheck = False
+							j.piece.inCheck = False
+
 					pieces.reachable(j,board)
 
-					for k in j.piece.reachable:
-						if k.piece is whiteKing and j.piece.color == black:
-							whiteKing.inCheck = True
-							checking = j
-							k.setColor(red)
-						elif k.piece is blackKing and j.piece.color == white:
-							blackKing.inCheck = True
-							checking = j
-							k.setColor(red)
+					
 						
 
 					
 
 
 		win.fill((0,0,0,0))
-		draw(over)
+		draw(over, king)
 
 		for event in pygame.event.get():
 
@@ -286,7 +295,7 @@ def main():
 				
 			if event.type == pygame.MOUSEBUTTONDOWN and not over:
 				
-
+				
 				pos = pygame.mouse.get_pos()
 				col, row = getClicked(pos, 8, w)
 				pygame.time.delay(50)
@@ -333,6 +342,7 @@ def main():
 								for j in i:
 									j.reset()
 						selected = False
+						
 
 					elif isValid(square, endSquare, whiteTurn, board) == 2:
 
@@ -346,6 +356,7 @@ def main():
 						selected = False
 						previous = (square, endSquare)
 						promoted = True
+
 					elif isValid(square, endSquare, whiteTurn, board) == 3:
 						taken = endSquare.piece
 						move(square, endSquare)
@@ -362,6 +373,7 @@ def main():
 								for j in i:
 									j.reset()
 						selected = False
+
 					elif isValid(square, endSquare, whiteTurn, board) == 4:
 						taken = endSquare.piece
 						move(square, endSquare)
@@ -421,14 +433,47 @@ def main():
 							selected = False
 
 
+		
+
+
+		for i in board:
+			for j in i:
+				if j.piece is not None:
+
+					if j.piece is blackKing or j.piece is whiteKing:
+							j.piece.inCheck = False
+
+					pieces.reachable(j,board)
+
+		for i in board:
+			for j in i:
+				if j.piece is not None:
+					for k in j.piece.reachable:
+
+						if k.piece is whiteKing and j.piece.color == black:
+							whiteKing.inCheck = True
+							checking = j
+							k.setColor(red)
+							
+						if k.piece is blackKing and j.piece.color == white:
+							blackKing.inCheck = True
+							checking = j
+							k.setColor(red)
+
 		if checkmate(blackKing, board, checking):
 			over = True
+			king = blackKing
 
 		if checkmate(whiteKing, board, checking):
 			over = True
+			king = whiteKing
+
+			
 
 
 
+
+		
 				
 				
 
