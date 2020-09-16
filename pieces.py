@@ -39,23 +39,35 @@ def checkLine(square, board):
 	down = row
 	while (left>-1):
 		reachable.append(board[row][left])
-		if (board[row][left].piece is not None) and (board[row][left] is not square):
-			break
+		if ((board[row][left].piece is not None) and (board[row][left] is not square)):
+			if board[row][left].piece.color != square.piece.color and str(board[row][left].piece) == "K":
+				pass
+			else:
+				break
 		left-=1
 	while right<8:
-		reachable.append(board[row][right])
-		if (board[row][right].piece is not None) and (board[row][right] is not square):
-			break
+		reachable.append(board[row][right]) 
+		if ((board[row][right].piece is not None) and (board[row][right] is not square)):
+			if board[row][right].piece.color != square.piece.color and str(board[row][right].piece) == "K":
+				pass
+			else:
+				break
 		right+=1
 	while up > -1:
 		reachable.append(board[up][col])
-		if (board[up][col].piece is not None) and (board[up][col] is not square):
-			break
+		if ((board[up][col].piece is not None) and (board[up][col] is not square)):
+			if board[up][col].piece.color != square.piece.color and str(board[up][col].piece) == "K":
+				pass
+			else:
+				break
 		up-=1
 	while down < 8:
 		reachable.append(board[down][col])
-		if (board[down][col].piece is not None) and (board[down][col] is not square):
-			break
+		if ((board[down][col].piece is not None) and (board[down][col] is not square)):
+			if board[down][col].piece.color != square.piece.color and str(board[down][col].piece) == "K":
+				pass
+			else:
+				break
 		down+=1
 	return reachable
 
@@ -113,7 +125,7 @@ def pawnMoves(square, board):
 		if col+1<8 and board[row-1][col+1].piece is not None:
 			if board[row-1][col+1].piece.color == black:
 				moves.append(board[row-1][col+1])
-		if not square.piece.start:
+		if not square.piece.start and board[row-1][col] in moves:
 			if board[row-2][col].piece is None:
 				moves.append(board[row-2][col])
 				
@@ -122,12 +134,10 @@ def pawnMoves(square, board):
 		if board[row+1][col].piece is None:
 			moves.append(board[row+1][col])
 		if col-1>-1 and board[row+1][col-1].piece is not None:
-			if board[row+1][col-1].piece.color == white:
 				moves.append(board[row+1][col-1]) 
 		if col+1<8 and board[row+1][col+1].piece is not None:
-			if board[row+1][col+1].piece.color == white:
 				moves.append(board[row+1][col+1])
-		if not square.piece.start:
+		if not square.piece.start and board[row+1][col] in moves:
 			if board[row+2][col].piece is None:
 				moves.append(board[row+2][col])
 				
@@ -247,32 +257,44 @@ def checkDiag(square, board):
 	down = row
 	while (left>-1) and up>-1:
 		reachable.append(board[up][left])
-		if (board[up][left].piece is not None) and (board[up][left] is not square):
-			break
+		if ((board[up][left].piece is not None) and (board[up][left] is not square)):
+			if board[up][left].piece.color != square.piece.color and str(board[up][left].piece) == "K":
+				pass
+			else:
+				break
 		left-=1
 		up-=1
 	left = col
 	up = row
 	while right<8 and down< 8:
 		reachable.append(board[down][right])
-		if (board[down][right].piece is not None) and (board[down][right] is not square):
-			break
+		if ((board[down][right].piece is not None) and (board[down][right] is not square)):
+			if board[down][right].piece.color != square.piece.color and str(board[down][right].piece) == "K":
+				pass
+			else:
+				break
 		right+=1
 		down+=1
 	right = col
 	down = row
 	while up > -1 and right <8:
 		reachable.append(board[up][right])
-		if (board[up][right].piece is not None) and (board[up][right] is not square):
-			break
+		if ((board[up][right].piece is not None) and (board[up][right] is not square)):
+			if board[up][right].piece.color != square.piece.color and str(board[up][right].piece) == "K":
+				pass
+			else:
+				break
 		up-=1
 		right+=1
 	up = row
 	right = col
 	while down < 8 and left>-1:
 		reachable.append(board[down][left])
-		if (board[down][left].piece is not None) and (board[down][left] is not square):
-			break
+		if ((board[down][left].piece is not None) and (board[down][left] is not square)):
+			if board[down][left].piece.color != square.piece.color and str(board[down][left].piece) == "K":
+				pass
+			else:
+				break
 		down+=1
 		left-=1
 	down = row
