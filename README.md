@@ -1,5 +1,5 @@
 # Python-Chess
-# See a video of this project: https://drive.google.com/file/d/1pPKZY2NFokLiVeqH1dWUtsCj6Gt0BTfi/view?usp=sharing
+# See a video of this project: https://drive.google.com/file/d/1DbjGC7kk76PV6LnouRJXw8jAY3XVmnjU/view?usp=sharing
 This is a basic chess program written in python, it allows all basic legal moves and some special moves.
 moves that this program does not support: En passant and pawn promotion to a piece other than Queen.
 # Rules that this program does check for:
