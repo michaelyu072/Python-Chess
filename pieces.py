@@ -154,12 +154,16 @@ def kingMoves(square, board):
 				moves.append(board[i][j])
 	if not square.piece.moved:
 		if square.piece.color == white:
-			moves.append(board[7][6])
-			moves.append(board[7][2])
+			if board[7][5].piece is None and board[7][6] is None:
+				moves.append(board[7][6])
+			if board[7][4].piece is None and board[7][3].piece is None and board[7][2].piece is None:
+				moves.append(board[7][2])
 
 		if square.piece.color == black:
-			moves.append(board[0][6])
-			moves.append(board[0][2])
+			if board[0][5].piece is None and board[0][6] is None:
+				moves.append(board[0][6])
+			if board[0][4].piece is None and board[0][3].piece is None and board[0][2].piece is None:
+				moves.append(board[0][2])
 
 	for i in board:
 		for j in i:
