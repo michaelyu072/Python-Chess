@@ -6,11 +6,11 @@ moves that this program does not support: En passant and pawn promotion to a pie
   1. All pieces can only move to squares they are allowed to - which are highlighted red for a selected piece.
   2. A piece cannot move into a square that is occupied by a piece of the same color.
   3. A pawn is allowed to move 2 squares on its first move, after that, the pawn can only move forward 1 square.
-  4. A pawn can only move diagnally when there is a piece of the opposite color to be taken.
+  4. A pawn can move diagnally only when there is a piece of the opposite color to be taken.
   5. Pawn promotes to a queen when it reaches the end of the board.
   6. The King's square is highlighted red when the King is in check.
   7. The King cannot castle after moving.
 # Rules that this program does not check for:
-  1. Whether or not a piece can prevent checkmate by blocking an opposing piece's attack on the king.
-  3. Whether or not the squares between a king and a rook are attacked before castle.
+  1. Whether or not a piece can block a check by moving in front of the king.
+  3. Whether or not the squares between a king and a rook are attacked before castle (unless the square is the king's destination square for castling).
   4. Whether or not a piece's movement would put the king in check.
