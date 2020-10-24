@@ -460,11 +460,11 @@ def main():
 							checking = j
 							k.setColor(red)
 
-		if checkmate(blackKing, board, checking):
+		if checkmate(blackKing, board, checking) and not whiteTurn:
 			over = True
 			king = blackKing
 
-		if checkmate(whiteKing, board, checking):
+		if checkmate(whiteKing, board, checking) and whiteTurn:
 			over = True
 			king = whiteKing
 
